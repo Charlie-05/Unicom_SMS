@@ -7,15 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinFormsApp_2025_06_02.Controllers;
+using WinFormsApp_2025_06_02.Models;
 using WinFormsApp_2025_06_02.Views;
 
 namespace WinFormsApp_2025_06_02
 {
     public partial class LoginForm : Form
     {
+        private readonly UserController _userController;
         public LoginForm()
         {
             InitializeComponent();
+            _userController = new UserController();
         }
 
         private void label4_Click(object sender, EventArgs e)
@@ -44,16 +48,28 @@ namespace WinFormsApp_2025_06_02
                 UserView userView = new UserView();
                 userView.Show();
                 this.Hide();
-            } 
-            else
-            {
-                // Invalid — show error
-                MessageBox.Show("Invalid username or password", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                // Optionally clear fields
-                userNameTxt.Clear();
-                userNameTxt.Focus();
             }
+            else 
+            {
+                Credentials credentials = new Credentials();
+                credentials.Username = username;
+                credentials.Password = password;
+                var result = _userController.Login(credentials);
+                if (result) {
+                    UserView userView = new UserView();
+                    userView.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid username or password", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    // Optionally clear fields
+                    userNameTxt.Clear();
+                    userNameTxt.Focus();
+                }
+            }
+           
         }
     }
 }

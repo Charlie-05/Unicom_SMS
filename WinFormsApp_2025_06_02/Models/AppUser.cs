@@ -11,7 +11,7 @@ namespace WinFormsApp_2025_06_02.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string? Username { get; set; }    
-        public UserRole? Role {  get; set; }
+        public string? Role {  get; set; }
         public string? Password {  get; set; }
     }
 
@@ -21,5 +21,17 @@ namespace WinFormsApp_2025_06_02.Models
         Staff = 2,
         Lecturer= 3,
         Student = 4,
+    }
+
+    public class RoleOptions
+    {
+        public int RoleId {  get; set; }
+        public UserRole RoleName { get; set; }   
+    }
+
+    public class Credentials
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
     }
 }

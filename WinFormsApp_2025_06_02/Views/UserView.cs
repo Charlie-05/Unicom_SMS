@@ -15,19 +15,22 @@ namespace WinFormsApp_2025_06_02.Views
 {
     public partial class UserView : Form
     {
-        private UserController userController;
-        private List<AppUser> Users;
+        private readonly UserController _userController;
+        private List<AppUser> _users;
+        //  private List<AppUser> Users;
         public UserView()
         {
             InitializeComponent();
+            _userController = new UserController();
             LoadUsers();
-            userController = new UserController();
+            
         }
 
         private void LoadUsers()
         {
             dataGridViewUsers.DataSource = null;
-            dataGridViewUsers.DataSource = Users;
+            dataGridViewUsers.DataSource = this.GetAllUsers();
+           
         }
         //private List<AppUser> Users = new List<AppUser>
         //{
@@ -35,9 +38,23 @@ namespace WinFormsApp_2025_06_02.Views
         //    new AppUser { Id = 2, Username = "john", Role = UserRole.Staff }
         //};
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SignUpForm signUpForm = new SignUpForm();
+
+            signUpForm.Show();
+            this.Hide();
+        }
+
+        //public AppUser AddUser()
+        //{
+        //    var data = _userController.AddUser()
+        //}
+
         public List<AppUser> GetAllUsers()
         {
-            return Users;
+            var data = _userController.GetAllUsers();
+            return data;
         }
     }
 }
